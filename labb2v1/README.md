@@ -8,3 +8,7 @@ sett 3 different occurrences can happen.
 Wall -1 ball bonces.
 Wall 0  ball slow down
 wall 1  ball speeds up.
+
+So at the moment there is a new branch that i work on that has the goal to add a
+vector of wall pointers to the ball class. That way I'm going to handle
+collision internally.

@@ -6,14 +6,18 @@
 class GObject
 {
 private:
-    sf::Vector2<float> pos;
-    
+    //sf::Rect<float> bondary;
+    sf::Shape *shape;
+
 
 public:
     GObject();
+    GObject(sf::Shape *sh);
     virtual ~GObject();
-    int isColidingWith(sf::Shape *sh);
-    void setPos(sf::Vector2<float> pos);
+    void setShape(sf::Shape * sh);
+    sf::Shape *getShape();
+    int isColidingWith(GObject *object);
+    void setPos(float x, float y);;
     sf::Vector2<float> getPos();
 
 };

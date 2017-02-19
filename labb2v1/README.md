@@ -8,3 +8,6 @@ sett 3 different occurrences can happen.
 Wall -1 ball bonces.
 Wall 0  ball slow down
 wall 1  ball speeds up.
+
+
+Working on this

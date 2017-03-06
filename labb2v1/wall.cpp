@@ -1,6 +1,14 @@
 #include "wall.hpp"
 
+Wall::Wall() {
+    this->setParam(0, 0, 0, 0, 0);  // Cale as eperate funcion to set porp
+}
+
 Wall::Wall(float posx, float posy, float width, float height, int efect) {
+    this->setParam(posx, posy, width, height, efect);  // Cale as eperate funcion to set porp
+}
+
+void Wall::setParam(float posx, float posy, float width, float height, int efect) {
 
 
     sf::RectangleShape *rect = new sf::RectangleShape;
@@ -51,4 +59,15 @@ void Wall::action(Ball *ball) {
             speed->x *= 1.1;
             speed->y *= 1.1;
     }
+}
+void Wall::addBalls(std::vector<Ball> *p_ball) {
+    this->balls = p_ball;
+}
+
+void Wall::actOnBalls() {
+    std::vector<Ball>::iterator it;
+    for(it = this->balls->begin(); it != this->balls->end(); it++){
+        this->action(&*it);
+    }
+    
 }

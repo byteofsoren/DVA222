@@ -4,6 +4,8 @@
 #include "rendrer.hpp"
 #include "ball.hpp"
 #include "wall.hpp"
+#define NRWALLS 6
+#define NRBALLS 4
 
 void test_render()
 {
@@ -30,52 +32,41 @@ int main(int argc, char *argv[])
     // update pos for the ball.
     // Wait untill end.
     Rendrer *render = new Rendrer(640,480);
-    Ball *boll1 = new Ball(10,10,30);
-    Ball *boll2 = new Ball(50,90,40);
-    Ball *boll3 = new Ball(100,20,50);
-    boll1->setSpeed(2,3);
-    boll2->setSpeed(1,0);
-    boll3->setSpeed(1,-1);
-    Wall *w1 = new Wall(1,10,30,200,0);
-    Wall *w2 = new Wall(800,100,30,200,-1);
-    render->addSapes(boll1->getShape());
-    render->addSapes(boll2->getShape());
-    render->addSapes(boll3->getShape());
-    render->addSapes(w1->getShape());
-    render->addSapes(w2->getShape());
+//   boll1->setSpeed(2,3);
+//    boll2->setSpeed(1,0);
+//    boll3->setSpeed(1,-1);
+    std::vector<Ball> *my_balls = new std::vector<Ball>;
+    for (int i = 0; i < NRBALLS; ++i) {
+        my_balls->push_back(Ball(10*i,30+1,4));
+        render->addSapes(my_balls->at(i).getShape());
+    }
+    std::vector<Wall> *my_walls = new std::vector<Wall>;
+    for (int i = 0; i < NRWALLS; ++i) {
+        my_walls->push_back(Wall());
+        render->addSapes(my_walls->at(i).getShape());
+    }
+    // Ball configurations
+    my_balls->at(0).setSpeed(1, 0.03);
+    my_balls->at(1).setSpeed(0.05, -1);
+    my_balls->at(2).setSpeed(-0.04, 0.03);
+    // Wall configuration
+    my_walls->at(0).setParam(0,0,1,600,-1); // Left Screen border
+    my_walls->at(1).setParam(0,0,800,1,-1); // Top Screan border
+    my_walls->at(2).setParam(600,0,1,600,-1); // Bot Screen boreer
+    my_walls->at(3).setParam(0,800,800,1,-1); // right Sreen border
+
+    my_walls->at(4).setParam(200,100,50,20,0); // right Sreen border
+    // Main loop to update streen
     render->update();
-    int running = 1;
-    while (running) {
-        running = render->isOpen();
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-            running = 0;
+    while (render->isOpen()) {
+        std::cout<<"In render loop" << std::endl;
+        for (size_t i = 0; i < my_balls->size(); ++i) {
+            my_balls->at(i).updatePos();
         }
-        boll1->updatePos();
-        boll2->updatePos();
-        boll3->updatePos();
-        if (boll1->isColidingWith(w1)) {
-            w1->action(boll1);
-        }
-        if (boll1->isColidingWith(w2)) {
-            w2->action(boll1);
-        }
-        
-        if (boll2->isColidingWith(w1)) {
-            w1->action(boll2);
-        }
-        if (boll2->isColidingWith(w2)) {
-            w2->action(boll2);
-        }
-        
-        if (boll3->isColidingWith(w1)) {
-            w1->action(boll3);
-        }
-        if (boll3->isColidingWith(w2)) {
-            w2->action(boll3);
-        }
-       render->update();
+        render->update();
         usleep(100);
     }
+    my_balls->clear();
 
     return 0;
 }

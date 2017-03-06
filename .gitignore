@@ -30,3 +30,6 @@
 
 #ycm.
 *.py
+
+#tags file
+tags

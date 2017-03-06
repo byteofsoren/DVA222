@@ -14,7 +14,6 @@ void GObject::setShape(sf::Shape *sh)
 }
 GObject::~GObject()
 {
-    free(this->shape);
 }
 void GObject::setPos(float x,float y){
    // GObject::pos = pos;
